@@ -10,3 +10,6 @@ docker-compose run --rm web-app sh -c "python manage.py startapp clients"
 docker-compose run --rm web-app sh -c "python manage.py makemigrations clients"
 
 python manage.py showmigrations
+
+
+docker exec -it testsite_database_1 psql -U dbuser dbname

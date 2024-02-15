@@ -20,6 +20,8 @@ services:
 
   database:
    image: postgres:14.6-alpine
+   ports:
+     - 5435:5432
    volumes:
      - postgres_data:/var/lib/postgresql/data/
    environment:
