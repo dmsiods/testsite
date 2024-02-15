@@ -1,5 +1,6 @@
 docker-compose run --rm web-app sh -c "django-admin startproject mysite ."
 docker-compose run --rm web-app sh -c "python manage.py migrate"
+(python manage.py sqlmigrate news 0001 - посмотреть sql)
 docker-compose run --rm web-app sh -c "python manage.py createsuperuser" (admin, admin)
 
 docker exec -it testsite_web-app_1 sh (подключение к web-app контейнеру)
@@ -8,15 +9,4 @@ docker exec -it testsite_database_1 sh (подключение к database ко�
 docker-compose run --rm web-app sh -c "python manage.py startapp clients"
 docker-compose run --rm web-app sh -c "python manage.py makemigrations clients"
 
-
-http://localhost:8000/api/subscriptions/?format=json
-ProgrammingError: relation "django_session" does not exist
-python manage.py migrate --fake sessions zero
-# then your sessions migrate will be
 python manage.py showmigrations
-sessions
- [ ] 0001_initial
-# then migrate with --fake-initial again
-python manage.py migrate --fake-initial
-
-
