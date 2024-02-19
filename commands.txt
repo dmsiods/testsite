@@ -4,6 +4,8 @@ docker-compose run --rm web-app sh -c "python manage.py migrate"
 docker-compose run --rm web-app sh -c "python manage.py createsuperuser" (admin, admin)
 
 docker exec -it testsite_web-app_1 sh (подключение к web-app контейнеру)
+python manage.py shell
+
 docker exec -it testsite_database_1 sh (подключение к database контейнеру)
 
 docker-compose run --rm web-app sh -c "python manage.py startapp clients"
