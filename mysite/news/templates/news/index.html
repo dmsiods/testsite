@@ -27,6 +27,7 @@
 
 <div class="container mt-3">
     <h1>{{ title }}</h1>
+    {{ news|length }}
     <div class="row">
         {% for item in news %}
             <div class="card mb-3">
@@ -34,9 +35,18 @@
                     Категория: {{ item.category }}
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ item.title }}</h5>
-                    <p class="card-text">{{ item.content }}</p>
-                    <a href="#" class="btn btn-primary">Read more...</a>
+                    <div class="media">
+                        {% if item.photo %}
+                            <img src="{{ item.photo.url }}" alt="" width="350" class="mr-3">
+                        {% else %}
+                            <img src="https://placebear.com/200/300" alt="" class="mr-3">
+                        {% endif %}
+                        <div class="media-body">
+                            <h5 class="card-title {% cycle 'text-danger' 'text-success' %}">{{ item.title }}</h5>
+                            <p class="card-text">{{ item.content }}</p>
+                            <a href="#" class="btn btn-primary">Read more...</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer text-body-secondary">
                     {{ item.created_at|date:'Y-m-d H:i:s' }}
