@@ -18,4 +18,6 @@ def index(request):
 
 
 def test(requesr):
+    # import pdb; pdb.set_trace()
+
     return HttpResponse('<h1>Тестовая страница</h1>')
