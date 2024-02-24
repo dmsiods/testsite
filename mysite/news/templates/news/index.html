@@ -42,13 +42,13 @@
                         {% endif %}
                         <div class="media-body">
                             <h5 class="card-title {% cycle 'text-danger' 'text-success' %}">{{ item.title }}</h5>
-                            <p class="card-text">{{ item.content }}</p>
+                            <p class="card-text">{{ item.content|safe|linebreaks|truncatewords:50 }}</p>
                             <a href="#" class="btn btn-primary">Read more...</a>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer text-body-secondary">
-                    {{ item.created_at|date:'Y-m-d H:i:s' }}
+                    {{ item.created_at|timesince }}
                 </div>
             </div>
         {% endfor %}
