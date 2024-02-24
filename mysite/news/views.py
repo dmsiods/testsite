@@ -1,23 +1,33 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from news.models import News
+from news.models import News, Category
 
 
 def index(request):
-    # print(dir(request))
-
     news = News.objects.order_by('-created_at')
+    categories = Category.objects.all()
 
     context = {
         'news': news,
-        'title': 'Список новостей'
+        'title': 'Список новостей',
+        'categories': categories
     }
 
     return render(request, template_name='news/index.html', context=context)
 
 
-def test(requesr):
+def test(request):
     # import pdb; pdb.set_trace()
 
-    return HttpResponse('<h1>Тестовая страница</h1>')
+    # return HttpResponse('<h1>Тестовая страница</h1>')
+
+    return render(request, 'news/test.html', {})
+
+
+def get_category(request, category_id):
+    news = News.objects.filter(category_id=category_id)
+    categories = Category.objects.all()
+    category = Category.objects.get(pk=category_id)
+
+    return render(request, 'news/category.html', {'news': news, 'categories': categories, 'category': category})
