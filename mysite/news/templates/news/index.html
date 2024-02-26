@@ -3,42 +3,38 @@
 {% block title %}{{ title }} :: {{ block.super }}{% endblock title %}
 
 {% block sidebar %}
-    <div class="col-md-4">
-        <div class="list-group">
-            {% for item in categories %}
-                <a href="{% url 'category' item.pk %}"
-                   class="list-group-item list-group-item-action">{{ item.title }}</a>
-            {% endfor %}
-        </div>
+    <div class="list-group">
+        {% for item in categories %}
+            <a href="{% url 'category' item.pk %}"
+               class="list-group-item list-group-item-action">{{ item.title }}</a>
+        {% endfor %}
     </div>
 {% endblock sidebar %}
 
 {% block content %}
-    <div class="col-md-8">
-        {% for item in news %}
-            <div class="card mb-3">
-                <div class="card-header">
-                    Категория: <a href="{% url 'category' item.category.pk %}">{{ item.category }}</a>
-                </div>
-                <div class="card-body">
-                    <div class="media">
-                        {% if item.photo %}
-                            <img src="{{ item.photo.url }}" alt="" width="350" class="mr-3">
-                        {% else %}
-                            <img src="https://img.freepik.com/premium-photo/a-blurry-image-of-a-sunset-with-a-blurry-background_407836-555.jpg"
-                                 alt="" width="350" class="mr-3">
-                        {% endif %}
-                        <div class="media-body">
-                            <h5 class="card-title {% cycle 'text-danger' 'text-success' %}">{{ item.title }}</h5>
-                            <p class="card-text">{{ item.content|safe|linebreaks|truncatewords:50 }}</p>
-                            <a href="#" class="btn btn-primary">Read more...</a>
-                        </div>
+    {% for item in news %}
+        <div class="card mb-3">
+            <div class="card-header">
+                Категория: <a href="{% url 'category' item.category.pk %}">{{ item.category }}</a>
+            </div>
+            <div class="card-body">
+                <div class="media">
+                    {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="" width="350" class="mr-3">
+                    {% else %}
+                        <img src="https://img.freepik.com/premium-photo/a-blurry-image-of-a-sunset-with-a-blurry-background_407836-555.jpg"
+                             alt="" width="350" class="mr-3">
+                    {% endif %}
+                    <div class="media-body">
+                        <h5 class="card-title {% cycle 'text-danger' 'text-success' %}">{{ item.title }}</h5>
+                        <p class="card-text">{{ item.content|safe|linebreaks|truncatewords:50 }}</p>
+                        <a href="#" class="btn btn-primary">Read more...</a>
                     </div>
                 </div>
-                <div class="card-footer text-body-secondary">
-                    {{ item.created_at|timesince }}
-                </div>
             </div>
-        {% endfor %}
-    </div>
+            <div class="card-footer text-body-secondary">
+                {{ item.created_at|timesince }}
+            </div>
+        </div>
+    {% endfor %}
 {% endblock content %}
