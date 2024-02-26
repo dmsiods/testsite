@@ -1,9 +1,20 @@
 {% extends 'base.html' %}
+{% load news_tags %}
 
 {% block title %}{{ title }} :: {{ block.super }}{% endblock title %}
 
 {% block sidebar %}
-    {% include 'inc/_sidebar.html' %}
+    {% comment %}
+    <div class="list-group">
+        {%  get_list_categories as categories %}
+
+        {% for item in categories %}
+            <a href="{% url 'category' item.pk %}"
+               class="list-group-item list-group-item-action">{{ item.title }}</a>
+        {% endfor %}
+    </div>
+    {% endcomment %}
+    {% show_categories %}
 {% endblock sidebar %}
 
 {% block content %}
