@@ -15,3 +15,8 @@ python manage.py showmigrations
 
 
 docker exec -it testsite_database_1 psql -U dbuser dbname
+
+
+debug:
+    import pdb; pdb.set_trace()
+    docker attach <id_container>
