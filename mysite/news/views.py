@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
 from news.forms import NewsForm
 from news.models import News, Category
@@ -44,6 +44,11 @@ class ViewNews(DetailView):
     context_object_name = 'news_item'
 
 
+class CreateNews(CreateView):
+    form_class = NewsForm
+    template_name = 'news/add_news.html'
+
+
 # def index(request):
 #     news = News.objects.order_by('-created_at')
 #
@@ -76,16 +81,16 @@ def test(request):
 #     return render(request, 'news/view_news.html', {'news_item': news_item})
 
 
-def add_news(request):
-    if request.method == 'POST':
-        form = NewsForm(request.POST)
-
-        if form.is_valid():
-            news = form.save()
-
-            return redirect(news)
-
-    else:
-        form = NewsForm()
-
-    return render(request, 'news/add_news.html', {'form': form})
+# def add_news(request):
+#     if request.method == 'POST':
+#         form = NewsForm(request.POST)
+#
+#         if form.is_valid():
+#             news = form.save()
+#
+#             return redirect(news)
+#
+#     else:
+#         form = NewsForm()
+#
+#     return render(request, 'news/add_news.html', {'form': form})
