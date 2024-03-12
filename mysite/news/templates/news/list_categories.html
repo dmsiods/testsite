@@ -2,7 +2,7 @@
     {% for item in categories %}
         <a href="{{ item.get_absolute_url }}"
            class="list-group-item list-group-item-action {% if item == active_category %} active {% endif %}">
-            {{ item.title }}
+            {{ item.title }} ({{ item.news_count }})
         </a>
     {% endfor %}
 </div>
