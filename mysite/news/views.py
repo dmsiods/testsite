@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView
 
@@ -9,6 +10,7 @@ class HomeNews(ListView):
     model = News
     template_name = 'news/home_news_list.html'
     context_object_name = 'news'
+    paginate_by = 2
     # extra_context = {'title': 'Главная'}  # для статичных данных
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -26,6 +28,7 @@ class NewsByCategory(ListView):
     template_name = 'news/category.html'
     context_object_name = 'news'
     allow_empty = False
+    paginate_by = 2
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -49,23 +52,16 @@ class CreateNews(CreateView):
     template_name = 'news/add_news.html'
 
 
-# def index(request):
-#     news = News.objects.order_by('-created_at')
-#
-#     context = {
-#         'news': news,
-#         'title': 'Список новостей'
-#     }
-#
-#     return render(request, template_name='news/index.html', context=context)
-
-
 def test(request):
     # import pdb; pdb.set_trace()
 
-    # return HttpResponse('<h1>Тестовая страница</h1>')
+    objects = ['object1', 'object2', 'object3', 'object4', 'object5', 'object6', 'object7']
 
-    return render(request, 'news/test.html', {})
+    paginator = Paginator(objects, 2)
+    page_num = request.GET.get('page', 1)
+    page_objects = paginator.get_page(page_num)
+
+    return render(request, 'news/test.html', {'page_obj': page_objects})
 
 
 # def get_category(request,category_id):

@@ -1,22 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="style.css">
-    <title>{% block title %}My amazing site{% endblock %}</title>
-</head>
+{% extends 'base.html' %}
+{% load news_tags %}
 
-<body>
-    <div id="sidebar">
-        {% block sidebar %}
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/blog/">Blog</a></li>
-        </ul>
-        {% endblock %}
-    </div>
+{% block title %}Тестовая страница :: {{ block.super }}{% endblock title %}
 
-    <div id="content">
-        {% block content %}{% endblock %}
-    </div>
-</body>
-</html>
+{% block sidebar %}
+    {% show_categories %}
+{% endblock sidebar %}
+
+{% block content %}
+    {% for name in page_obj.object_list %}
+        <p>{{ name }}</p>
+    {% endfor %}
+{% endblock content %}
