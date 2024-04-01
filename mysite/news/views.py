@@ -1,10 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView
 
-from news.forms import NewsForm, UserRegisterForm, UserLoginForm
+from mysite import settings
+from news.forms import NewsForm, UserRegisterForm, UserLoginForm, ContactForm
 from news.models import News, Category
 
 
@@ -49,6 +51,7 @@ class HomeNews(ListView):
     template_name = 'news/home_news_list.html'
     context_object_name = 'news'
     paginate_by = 2
+
     # extra_context = {'title': 'Главная'}  # для статичных данных
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -90,17 +93,37 @@ class CreateNews(CreateView):
     template_name = 'news/add_news.html'
 
 
+# def test(request):
+#     # import pdb; pdb.set_trace()
+#
+#     objects = ['object1', 'object2', 'object3', 'object4', 'object5', 'object6', 'object7']
+#
+#     paginator = Paginator(objects, 2)
+#     page_num = request.GET.get('page', 1)
+#     page_objects = paginator.get_page(page_num)
+#
+#     return render(request, 'news/test.html', {'page_obj': page_objects})
+
+
 def test(request):
-    # import pdb; pdb.set_trace()
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
 
-    objects = ['object1', 'object2', 'object3', 'object4', 'object5', 'object6', 'object7']
+        if form.is_valid():
+            mail = send_mail(form.cleaned_data['subject'], form.cleaned_data['content'], settings.EMAIL_HOST_USER,
+                             ['vitokaif@gmail.com'], fail_silently=True)
 
-    paginator = Paginator(objects, 2)
-    page_num = request.GET.get('page', 1)
-    page_objects = paginator.get_page(page_num)
+            if mail:
+                messages.success(request, 'Письмо отправлено')
+                return redirect('test')
+            else:
+                messages.error(request, 'Ошибка отправки')
+        else:
+            messages.error(request, 'Ошибка валидации формы')
+    else:
+        form = ContactForm()
 
-    return render(request, 'news/test.html', {'page_obj': page_objects})
-
+    return render(request, 'news/test.html', {'form': form})
 
 # def get_category(request,category_id):
 #     news = News.objects.filter(category_id=category_id)
