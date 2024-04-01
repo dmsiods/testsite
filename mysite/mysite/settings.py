@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'news.apps.NewsConfig',
 
-    'rest_framework'
+    'rest_framework',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -206,3 +208,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'dmsiods0@gmail.com'
 EMAIL_HOST_PASSWORD = ''
+
+CKEDITOR_UPLOAD_PATH = "uploads/"

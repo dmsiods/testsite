@@ -13,6 +13,7 @@ docker-compose run --rm web-app sh -c "python manage.py makemigrations clients"
 
 python manage.py showmigrations
 
+python manage.py collectstatic --noinput
 
 docker exec -it testsite_database_1 psql -U dbuser dbname - подключение к базе в консоли
 
